@@ -1,5 +1,6 @@
 import tkinter as tk
-
+import cv2
+from pyzbar import pyzbar
 
 # Create the main window
 root = tk.Tk()
