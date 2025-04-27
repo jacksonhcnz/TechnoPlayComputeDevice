@@ -16,11 +16,7 @@ def hotkeyb_callback():
     os.system(f"open {notepadpath}")
 def hotkeyc_callback():
 #    print("c was pressed!")
-   os.startfile('notepad')
-
-
-
-
+   os.startfile('"C:\games\xmen.bat"')
 
 keyboard.add_hotkey('a', hotkeya_callback)
 keyboard.add_hotkey('b', hotkeyb_callback)

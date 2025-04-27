@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -exit "C:\games\DOSBOX_XMEN\XMENPC.EXE"
