@@ -1,6 +1,32 @@
 import tkinter as tk
 import cv2
 from pyzbar import pyzbar
+import keyboard
+import os
+
+#def handle_key_press(event):
+#    print("Space was pressed!")
+
+notepadpath = "notepad"
+
+def hotkeya_callback():
+    print("a was pressed!")
+def hotkeyb_callback():
+#    print("b was pressed!")
+    os.system(f"open {notepadpath}")
+def hotkeyc_callback():
+#    print("c was pressed!")
+   os.startfile('notepad')
+
+
+
+
+
+keyboard.add_hotkey('a', hotkeya_callback)
+keyboard.add_hotkey('b', hotkeyb_callback)
+keyboard.add_hotkey('c', hotkeyc_callback)
+
+
 
 # Create the main window
 root = tk.Tk()
@@ -41,6 +67,9 @@ label = tk.Label(root,
 # Pack the label into the window
 label.pack()  # Add some padding to the top
 
+#root.bind("<Key>", handle_key_press)
+
 
 # Run the main event loop
 root.mainloop()
+
