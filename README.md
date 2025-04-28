@@ -21,3 +21,5 @@ Windows
 python -m pip install -U pygame --user
 python -m pip install pygame-menu -U
 python -m pip install opencv-python pyzbar
+
+<span style="color:blue">some *blue* text</span>.
