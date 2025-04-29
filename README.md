@@ -17,8 +17,18 @@ Windows
 - winget install VSCodium.VSCodium
 - winget install git.git
 
+Libraries im currently testing
 
-python -m pip install -U pygame --user
-python -m pip install pygame-menu -U
-python -m pip install opencv-python pyzbar
+- python -m pip install -U pygame --user
+- python -m pip install pygame-menu -U
+- python -m pip install opencv-python pyzbar
 
+
+
+What i want the applicaiton gui to look like
+
+![01 base screen](https://github.com/user-attachments/assets/d06ecfb3-2539-4616-8d38-444df0d85c86)
+![02 card inserted but not yet read](https://github.com/user-attachments/assets/e47dfbc6-29d8-45f8-9ce0-b8e7851541f8)
+![03a Card has been read and game is launching (2)](https://github.com/user-attachments/assets/8798754b-98c1-4d00-8e17-0c2fad250209)
+![03b Card has been read and game is launching](https://github.com/user-attachments/assets/c7ef24a7-c4f9-4384-9c05-15d6e98e20d6)
+![04 console card exits the program to the console](https://github.com/user-attachments/assets/9956bdb6-5975-489e-b717-5d9f3f8094c9)
