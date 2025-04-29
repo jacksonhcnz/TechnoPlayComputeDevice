@@ -23,10 +23,11 @@ Libraries im currently testing
 - python -m pip install pygame-menu -U
 - python -m pip install opencv-python pyzbar
 
+What I think the game cards could look like
+![Screenshot 2025-04-29 140000](https://github.com/user-attachments/assets/3bdc72e1-8232-474d-8c21-0f145ece0e2c)
 
 
-What i want the applicaiton gui to look like
-
+What I think the applicaiton gui could look like
 ![01 base screen](https://github.com/user-attachments/assets/d06ecfb3-2539-4616-8d38-444df0d85c86)
 ![02 card inserted but not yet read](https://github.com/user-attachments/assets/e47dfbc6-29d8-45f8-9ce0-b8e7851541f8)
 ![03a Card has been read and game is launching (2)](https://github.com/user-attachments/assets/8798754b-98c1-4d00-8e17-0c2fad250209)
