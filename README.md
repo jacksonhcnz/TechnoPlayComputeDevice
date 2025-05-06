@@ -54,6 +54,7 @@ Some design for the console
 ![Screenshot 2025-05-06 151220](https://github.com/user-attachments/assets/9773588f-c35d-4f4b-97ba-5d0bee147420)
 
 some ideas for the casette case game case
+
 ![Screenshot 2025-05-07 100225](https://github.com/user-attachments/assets/62061f22-1873-4639-8b81-d479405517e3)
 
 ![Screenshot 2025-05-07 100327](https://github.com/user-attachments/assets/90b6fddd-1ccd-4dab-bf4d-33e5f68a9f4e)
