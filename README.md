@@ -23,6 +23,13 @@ Libraries im currently testing
 - python -m pip install pygame-menu -U
 - python -m pip install opencv-python pyzbar
 
+
+
+
+
+
+
+
 What I think the game cards could look like
 ![Screenshot 2025-04-29 140000](https://github.com/user-attachments/assets/3bdc72e1-8232-474d-8c21-0f145ece0e2c)
 
@@ -33,3 +40,16 @@ What I think the application gui could look like
 ![03a Card has been read and game is launching (2)](https://github.com/user-attachments/assets/8798754b-98c1-4d00-8e17-0c2fad250209)
 ![03b Card has been read and game is launching](https://github.com/user-attachments/assets/c7ef24a7-c4f9-4384-9c05-15d6e98e20d6)
 ![04 console card exits the program to the console](https://github.com/user-attachments/assets/9956bdb6-5975-489e-b717-5d9f3f8094c9)
+
+
+Hardware
+pi4b
+hdmi and power relocater
+https://spotpear.com/wiki/Raspberry-Pi-5-4B-Adapter-HDMI-4K.html#Introduction
+pi camera (gen1)
+
+Going to make the game cards slightly smaller than an audio cassette so i can use cassette cases as game cases.
+
+Some design for the console
+![Screenshot 2025-05-06 151220](https://github.com/user-attachments/assets/9773588f-c35d-4f4b-97ba-5d0bee147420)
+
