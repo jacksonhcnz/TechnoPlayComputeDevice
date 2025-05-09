@@ -24,7 +24,7 @@ Libraries im currently testing
 - python -m pip install opencv-python pyzbar
 
 
-
+https://npyscreen.readthedocs.io/introduction.html
 
 
 
