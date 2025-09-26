@@ -1,11 +1,13 @@
-
 from textual.app import App, ComposeResult
 from textual.widgets import Static
-from textual.events import Key
 from textual.timer import Timer
-from textual.containers import Horizontal
 from datetime import datetime
 import subprocess
+import pygame
+
+
+# Example variable
+cardnumber = "1234"
 
 
 class SpinnerText(Static):
@@ -25,7 +27,7 @@ class SpinnerText(Static):
         self.update(f"{self.base_text} {spin}")
 
 
-class ClockLabel(Static):
+class Clock(Static):
     def on_mount(self) -> None:
         self.set_interval(1, self.update_time)
 
@@ -47,34 +49,44 @@ class GameCardApp(App):
         content-align: center middle;
     }
 
-    #top-bar {
-        dock: top;
-        height: 3;
-        padding: 0 1;
-        align-horizontal: right;
-    }
-
     #clock {
+        dock: top;
+        align-horizontal: right;
+        padding: 1 2;
         color: white;
     }
     """
 
     def compose(self) -> ComposeResult:
-        # Top-right bar with "System time: HH:MM:SS"
-        yield Horizontal(ClockLabel(id="clock"), id="top-bar")
+        yield Clock(id="clock")
         yield SpinnerText()
 
-    def on_key(self, event: Key) -> None:
-        key = event.key.upper()
+    def on_mount(self) -> None:
+        """Start monitoring joystick only while TUI is active."""
+        pygame.init()
+        pygame.joystick.init()
+        if pygame.joystick.get_count() > 0:
+            self.joystick = pygame.joystick.Joystick(0)
+            self.joystick.init()
+            self.joy_timer = self.set_interval(0.1, self.check_gamepad)
+            self.log("Gamepad monitoring enabled")
+        else:
+            self.log("No joystick detected")
 
-        script_map = {
-            "A": "python script_a.py",
-            "B": "python script_b.py",
-            "C": "python script_c.py",
-        }
+    def on_unmount(self) -> None:
+        """Stop monitoring when app closes or loses focus."""
+        if hasattr(self, "joy_timer"):
+            self.joy_timer.stop()
+            self.log("Gamepad monitoring stopped")
 
-        if key in script_map:
-            self.run_script(script_map[key])
+    def check_gamepad(self) -> None:
+        global cardnumber
+        for event in pygame.event.get():
+            if event.type == pygame.JOYBUTTONDOWN:
+                # "Start" button is usually index 7
+                if event.button == 7:
+                    script_name = f"{cardnumber}.py"
+                    self.run_script(f"python3 {script_name}")
 
     def run_script(self, command: str) -> None:
         try:
