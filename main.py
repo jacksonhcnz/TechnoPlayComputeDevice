@@ -86,6 +86,11 @@ class GamepadList(Static):
 
 class GameCardApp(App):
     BINDINGS = [("q", "quit_app", "Quit")]
+
+    def action_quit_app(self) -> None:
+        """Exit the application when the user presses the bound key."""
+        self.exit()
+
     CSS = """
     Screen {
         align: center middle;
@@ -118,9 +123,9 @@ class GameCardApp(App):
         padding: 1 2;
         color: cyan;
     }
-    }
-    """    def action_quit_app(self):
-        self.exit()    def compose(self) -> ComposeResult:
+    """
+
+    def compose(self) -> ComposeResult:
         yield Clock(id="clock")
         yield GamepadList(id="gamepad_list")
         yield DecimalDisplay(id="decimal_display")
@@ -135,28 +140,5 @@ class GameCardApp(App):
             self.joystick.init()
             self.joy_timer = self.set_interval(0.1, self.check_gamepad)
             self.log("Gamepad monitoring enabled")
-        else:
-            self.log("No joystick detected")
-
-    def on_unmount(self) -> None:
-        if hasattr(self, "joy_timer"):
-            self.joy_timer.stop()
-            self.log("Gamepad monitoring stopped")
-
-    def check_gamepad(self) -> None:
-        global cardnumber
-        for event in pygame.event.get():
-            if event.type == pygame.JOYBUTTONDOWN:
-                if event.button == 7:
-                    script_name = f"{cardnumber}.py"
-                    self.run_script(f"python3 {script_name}")
-
-    def run_script(self, command: str) -> None:
-        try:
-            subprocess.run(command, shell=True, check=True)
-        except subprocess.CalledProcessError as e:
-            self.log(f"Error running script: {e}")
-
-
-if __name__ == "__main__":
+        el
     GameCardApp().run()
