@@ -29,6 +29,6 @@ def read_gpio_as_decimal(pins):
 
 
 # Example usage
-pins = [17, 27, 22, 23]   # adjust to your wiring
+pins = [17, 27, 22, 23, 24]   # adjust to your wiring
 cardnumber = read_gpio_as_decimal(pins)
 print("Card number:", cardnumber)
