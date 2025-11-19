@@ -7,7 +7,6 @@ echo "Installing Python 3 and pip..."
 sudo apt install -y python3 python3-pip
 
 echo "Installing Python packages..."
-# datetime and subprocess are part of Python's standard library
-pip3 install textual pygame RPi.GPIO
+pip3 install --break-system-packages textual pygame RPi.GPIO
 
 echo "Installation complete!"
