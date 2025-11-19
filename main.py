@@ -1,13 +1,22 @@
+# Updated main.py with GPIO reading, displaying value, and gamepad list
+
 from textual.app import App, ComposeResult
 from textual.widgets import Static
 from textual.timer import Timer
 from datetime import datetime
 import subprocess
 import pygame
+import RPi.GPIO as GPIO
 
+# GPIO pins to read
+INPUT_PINS = [17, 27, 22, 23, 24]  # Example GPIO pins representing bits
 
-# Example variable
-cardnumber = "1234"
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+for pin in INPUT_PINS:
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+cardnumber = 0
 
 
 class SpinnerText(Static):
@@ -36,6 +45,45 @@ class Clock(Static):
         self.update(f"System time: {now}")
 
 
+class DecimalDisplay(Static):
+    """Shows the decimal value generated from GPIO bits."""
+    def on_mount(self) -> None:
+        self.set_interval(0.2, self.update_value)
+
+    def update_value(self) -> None:
+        global cardnumber
+        bits = [GPIO.input(pin) for pin in INPUT_PINS]
+        value = 0
+        for i, bit in enumerate(reversed(bits)):
+            value |= (bit << i)
+        cardnumber = value
+        self.update(f"Card Number: {cardnumber}")
+
+
+class GamepadList(Static):
+    """Top-right list of all connected gamepads."""
+    def on_mount(self) -> None:
+        self.set_interval(1, self.refresh_gamepads)
+
+    def refresh_gamepads(self) -> None:
+        pygame.joystick.quit()
+        pygame.joystick.init()
+        count = pygame.joystick.get_count()
+
+        if count == 0:
+            self.update("Gamepads: None")
+            return
+
+        names = []
+        for i in range(count):
+            js = pygame.joystick.Joystick(i)
+            js.init()
+            names.append(js.get_name())
+
+        listing = "\n".join(names)
+        self.update(f"Gamepads (Connected):\n{listing}")
+
+
 class GameCardApp(App):
     CSS = """
     Screen {
@@ -55,16 +103,32 @@ class GameCardApp(App):
         padding: 1 2;
         color: white;
     }
+
+    #decimal_display {
+        dock: bottom;
+        align-horizontal: right;
+        padding: 1 2;
+        color: yellow;
+    }
+
+    #gamepad_list {
+        dock: top;
+        align-horizontal: left;
+        padding: 1 2;
+        color: cyan;
+    }
     """
 
     def compose(self) -> ComposeResult:
         yield Clock(id="clock")
+        yield GamepadList(id="gamepad_list")
+        yield DecimalDisplay(id="decimal_display")
         yield SpinnerText()
 
     def on_mount(self) -> None:
-        """Start monitoring joystick only while TUI is active."""
         pygame.init()
         pygame.joystick.init()
+
         if pygame.joystick.get_count() > 0:
             self.joystick = pygame.joystick.Joystick(0)
             self.joystick.init()
@@ -74,7 +138,6 @@ class GameCardApp(App):
             self.log("No joystick detected")
 
     def on_unmount(self) -> None:
-        """Stop monitoring when app closes or loses focus."""
         if hasattr(self, "joy_timer"):
             self.joy_timer.stop()
             self.log("Gamepad monitoring stopped")
@@ -83,7 +146,6 @@ class GameCardApp(App):
         global cardnumber
         for event in pygame.event.get():
             if event.type == pygame.JOYBUTTONDOWN:
-                # "Start" button is usually index 7
                 if event.button == 7:
                     script_name = f"{cardnumber}.py"
                     self.run_script(f"python3 {script_name}")
