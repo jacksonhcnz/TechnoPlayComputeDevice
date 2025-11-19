@@ -1,34 +1,31 @@
+import time
 import RPi.GPIO as GPIO
+import keyboard  # You might need to install this via `pip install keyboard`
 
-def read_gpio_as_decimal(pins):
-    """
-    Reads the given GPIO pins, interprets them as bits of a binary number,
-    and returns the decimal value as a string.
+# Example GPIO pins used
+GPIO_PINS = [17, 27, 22, 23, 24]  # Replace with your actual pins
 
-    Args:
-        pins (list[int]): List of GPIO pin numbers (BCM mode). 
-                          The first element is the MSB, the last is the LSB.
+# Set up GPIO
+GPIO.setmode(GPIO.BCM)
+for pin in GPIO_PINS:
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-    Returns:
-        str: Decimal string of the binary value.
-    """
-    GPIO.setmode(GPIO.BCM)
-
-    # Setup pins as input with pulldown
-    for pin in pins:
-        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-    # Read bits from pins
+def read_gpio_number():
+    """Read GPIO pins as bits and return decimal number"""
     value = 0
-    for i, pin in enumerate(reversed(pins)):  # last pin is LSB
-        bit = GPIO.input(pin)
-        value |= (bit << i)
+    for i, pin in enumerate(GPIO_PINS):
+        if GPIO.input(pin):
+            value += 1 << i  # Set the bit
+    return value
 
+try:
+    print("Reading GPIO. Press 'q' to quit.")
+    while True:
+        number = read_gpio_number()
+        print(f"Read number: {number}")
+        time.sleep(0.1)  # Small delay
+        if keyboard.is_pressed('q'):  # Quit shortcut
+            print("Quit key pressed. Exiting...")
+            break
+finally:
     GPIO.cleanup()
-    return str(value)
-
-
-# Example usage
-pins = [17, 27, 22, 23, 24]   # adjust to your wiring
-cardnumber = read_gpio_as_decimal(pins)
-print("Card number:", cardnumber)
