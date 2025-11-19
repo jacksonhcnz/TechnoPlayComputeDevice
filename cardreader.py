@@ -1,31 +1,29 @@
-import time
 import RPi.GPIO as GPIO
-import keyboard  # You might need to install this via `pip install keyboard`
+import time
 
-# Example GPIO pins used
-GPIO_PINS = [17, 27, 22, 23, 24]  # Replace with your actual pins
+# GPIO pins to monitor (5 pins)
+GPIO_PINS = [17, 27, 22, 23, 24]  # Adjust as needed
 
-# Set up GPIO
+# Setup GPIO
 GPIO.setmode(GPIO.BCM)
 for pin in GPIO_PINS:
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-def read_gpio_number():
-    """Read GPIO pins as bits and return decimal number"""
+def read_pins_as_decimal():
+    """Read 5 GPIO pins as binary and return decimal number"""
     value = 0
     for i, pin in enumerate(GPIO_PINS):
         if GPIO.input(pin):
-            value += 1 << i  # Set the bit
-    return value
+            value += 1 << i  # Treat each pin as a bit
+    return value  # Returns an integer (decimal)
 
 try:
-    print("Reading GPIO. Press 'q' to quit.")
+    print("Monitoring GPIO pins. Press Ctrl+C to exit.")
     while True:
-        number = read_gpio_number()
-        print(f"Read number: {number}")
+        number = read_pins_as_decimal()
+        print(f"Decimal value: {number}")
         time.sleep(0.1)  # Small delay
-        if keyboard.is_pressed('q'):  # Quit shortcut
-            print("Quit key pressed. Exiting...")
-            break
+except KeyboardInterrupt:
+    print("Exiting...")
 finally:
     GPIO.cleanup()
