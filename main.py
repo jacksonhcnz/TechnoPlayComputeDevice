@@ -9,7 +9,7 @@ import pygame
 import RPi.GPIO as GPIO
 
 # GPIO pins to read
-INPUT_PINS = [17, 27, 22, 23, 24]  # Example GPIO pins representing bits
+INPUT_PINS = [5, 6, 13, 19]  # Example GPIO pins representing bits
 
 # Setup GPIO
 GPIO.setmode(GPIO.BCM)
@@ -85,6 +85,7 @@ class GamepadList(Static):
 
 
 class GameCardApp(App):
+    BINDINGS = [("q", "quit_app", "Quit")]
     CSS = """
     Screen {
         align: center middle;
@@ -113,11 +114,15 @@ class GameCardApp(App):
 
     #gamepad_list {
         dock: top;
-        align-horizontal: left;
+        align-horizontal: right;
         padding: 1 2;
         color: cyan;
     }
+    }
     """
+
+        def action_quit_app(self):
+        self.exit()
 
     def compose(self) -> ComposeResult:
         yield Clock(id="clock")
