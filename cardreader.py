@@ -7,7 +7,7 @@ GPIO_PINS = [17, 27, 22, 23, 24]  # Adjust as needed
 # Setup GPIO
 GPIO.setmode(GPIO.BCM)
 for pin in GPIO_PINS:
-    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 def read_pins_as_decimal():
     """Read 5 GPIO pins as binary and return decimal number"""
