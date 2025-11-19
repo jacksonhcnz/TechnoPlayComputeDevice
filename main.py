@@ -140,5 +140,28 @@ class GameCardApp(App):
             self.joystick.init()
             self.joy_timer = self.set_interval(0.1, self.check_gamepad)
             self.log("Gamepad monitoring enabled")
-        el
+        else:
+            self.log("No joystick detected")
+
+    def on_unmount(self) -> None:
+        if hasattr(self, "joy_timer"):
+            self.joy_timer.stop()
+            self.log("Gamepad monitoring stopped")
+
+    def check_gamepad(self) -> None:
+        global cardnumber
+        for event in pygame.event.get():
+            if event.type == pygame.JOYBUTTONDOWN:
+                if event.button == 7:
+                    script_name = f"{cardnumber}.py"
+                    self.run_script(f"python3 {script_name}")
+
+    def run_script(self, command: str) -> None:
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            self.log(f"Error running script: {e}")
+
+
+if __name__ == "__main__":
     GameCardApp().run()
