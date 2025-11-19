@@ -119,12 +119,8 @@ class GameCardApp(App):
         color: cyan;
     }
     }
-    """
-
-        def action_quit_app(self):
-        self.exit()
-
-    def compose(self) -> ComposeResult:
+    """    def action_quit_app(self):
+        self.exit()    def compose(self) -> ComposeResult:
         yield Clock(id="clock")
         yield GamepadList(id="gamepad_list")
         yield DecimalDisplay(id="decimal_display")
