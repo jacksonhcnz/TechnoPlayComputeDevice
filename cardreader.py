@@ -31,3 +31,4 @@ if __name__ == "__main__":
             time.sleep(0.05)
     except KeyboardInterrupt:
         GPIO.cleanup()
+        
