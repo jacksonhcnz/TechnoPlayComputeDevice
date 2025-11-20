@@ -1,4 +1,4 @@
-         import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 # Example: use pins 17, 27, 22, 23 (4-bit number)
