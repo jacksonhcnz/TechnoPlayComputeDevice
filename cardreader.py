@@ -7,10 +7,10 @@ PINS = [17, 27, 22, 23, 24]
 def setup():
     GPIO.setmode(GPIO.BCM)   # use Broadcom pin numbering
     for pin in PINS:
-        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 def read_binary_to_decimal():
-    value = 0
+    value = 666
     for i, pin in enumerate(reversed(PINS)):
         bit = GPIO.input(pin)
         value |= (bit << i)   # set bit i if pin is HIGH
