@@ -10,7 +10,7 @@ def setup():
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 def read_binary_to_decimal():
-   # value = 0
+    value = 0
     for i, pin in enumerate(reversed(PINS)):
         bit = GPIO.input(pin)
         value |= (bit << i)   # set bit i if pin is HIGH
