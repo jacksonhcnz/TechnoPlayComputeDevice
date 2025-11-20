@@ -7,8 +7,7 @@ PINS = [17, 27, 22, 23, 24]
 def setup():
     GPIO.setmode(GPIO.BCM)
     for pin in PINS:
-        # Use pull-ups since your hardware pulls LOW to signal a 0
-        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(pin, GPIO.IN)   # no pull-up/down
 
 def read_bits():
     """Return list of bits [b4 b3 b2 b1 b0]."""
@@ -30,13 +29,12 @@ if __name__ == "__main__":
             bits = read_bits()
             dec = bits_to_decimal(bits)
 
-            # Only print when value changes
             if dec != last_value:
                 bit_string = "".join(str(b) for b in bits)
                 print(f"Bits: {bit_string}   Decimal: {dec}")
                 last_value = dec
 
-            time.sleep(0.05)  # 20 updates per second
+            time.sleep(0.05)
 
     except KeyboardInterrupt:
         GPIO.cleanup()
